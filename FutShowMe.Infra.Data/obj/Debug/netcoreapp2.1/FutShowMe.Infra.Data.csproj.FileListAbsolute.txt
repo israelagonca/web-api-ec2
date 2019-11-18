@@ -1,0 +1,13 @@
+D:\Projetos\FutShowMe\Mobile Web-API\FutShowMe-WebAPI\FutShowMe.Infra.Data\bin\Debug\netcoreapp2.1\FutShowMe.Infra.Data.deps.json
+D:\Projetos\FutShowMe\Mobile Web-API\FutShowMe-WebAPI\FutShowMe.Infra.Data\bin\Debug\netcoreapp2.1\FutShowMe.Infra.Data.runtimeconfig.json
+D:\Projetos\FutShowMe\Mobile Web-API\FutShowMe-WebAPI\FutShowMe.Infra.Data\bin\Debug\netcoreapp2.1\FutShowMe.Infra.Data.runtimeconfig.dev.json
+D:\Projetos\FutShowMe\Mobile Web-API\FutShowMe-WebAPI\FutShowMe.Infra.Data\bin\Debug\netcoreapp2.1\FutShowMe.Infra.Data.dll
+D:\Projetos\FutShowMe\Mobile Web-API\FutShowMe-WebAPI\FutShowMe.Infra.Data\bin\Debug\netcoreapp2.1\FutShowMe.Infra.Data.pdb
+D:\Projetos\FutShowMe\Mobile Web-API\FutShowMe-WebAPI\FutShowMe.Infra.Data\bin\Debug\netcoreapp2.1\FutShowMe.Domain.dll
+D:\Projetos\FutShowMe\Mobile Web-API\FutShowMe-WebAPI\FutShowMe.Infra.Data\bin\Debug\netcoreapp2.1\FutShowMe.Domain.pdb
+D:\Projetos\FutShowMe\Mobile Web-API\FutShowMe-WebAPI\FutShowMe.Infra.Data\obj\Debug\netcoreapp2.1\FutShowMe.Infra.Data.csprojAssemblyReference.cache
+D:\Projetos\FutShowMe\Mobile Web-API\FutShowMe-WebAPI\FutShowMe.Infra.Data\obj\Debug\netcoreapp2.1\FutShowMe.Infra.Data.AssemblyInfoInputs.cache
+D:\Projetos\FutShowMe\Mobile Web-API\FutShowMe-WebAPI\FutShowMe.Infra.Data\obj\Debug\netcoreapp2.1\FutShowMe.Infra.Data.AssemblyInfo.cs
+D:\Projetos\FutShowMe\Mobile Web-API\FutShowMe-WebAPI\FutShowMe.Infra.Data\obj\Debug\netcoreapp2.1\FutShowMe.Infra.Data.csproj.CopyComplete
+D:\Projetos\FutShowMe\Mobile Web-API\FutShowMe-WebAPI\FutShowMe.Infra.Data\obj\Debug\netcoreapp2.1\FutShowMe.Infra.Data.dll
+D:\Projetos\FutShowMe\Mobile Web-API\FutShowMe-WebAPI\FutShowMe.Infra.Data\obj\Debug\netcoreapp2.1\FutShowMe.Infra.Data.pdb

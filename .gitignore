@@ -3,3 +3,15 @@
 ################################################################################
 
 /.vs/FutShowMeAPI
+/FutShowMe.WebAPI/bin/Debug
+/FutShowMe.WebAPI/obj
+/FutShowMe.WebAPI/Videos
+/FutShowMe.Application/bin/Debug
+/FutShowMe.Application/obj
+/FutShowMe.Domain/bin
+/FutShowMe.Domain/obj
+/FutShowMe.Infra.CrossCutting/bin/Debug
+/FutShowMe.Infra.CrossCutting/obj
+/FutShowMe.Infra.Data/bin/Debug
+/FutShowMe.OrangePI.WebAPI/bin
+/FutShowMe.OrangePI.WebAPI/obj

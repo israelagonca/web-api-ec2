@@ -1,0 +1,137 @@
+[GIT]
+cd web-api/FutShowMe-WebAPI/FutShowMe.OrangePI.WebAPI/
+git pull
+dotnet publish -c Release
+cd bin/Release/netcoreapp3.0/publish/
+rm -rf Data/
+rm -rf appsettings.json
+sudo systemctl stop web-api
+sudo cp * -R /srv/www/web-api/
+sudo systemctl start web-api
+
+[GPIO]
+------------------------------------------------------------------------------------------------
+Conceder permissoes a pasta do GPIO ao usuario do Apache
+
+[Configurar SQLite]
+------------------------------------------------------------------------------------------------
+1. Dar permissão ao Arquivo e Diretorio do Banco.
+[diretorio de publicacao]/srv/www/web-api/Data/orangepiDB.db
+2. Validar o caminho do banco
+[diretorio de publicacao]appsettings.json
+
+[Configurar o Kestrel]
+------------------------------------------------------------------------------------------------
+1. Criar o Diretorio
+/srv/www/web-api
+
+2. Criar o serviço systemd
+/etc/systemd/system/web-api.service
+
+[Unit]
+Description=web api FutShowMe
+After=network.target
+
+[Service]
+WorkingDirectory=/srv/www/web-api
+ExecStart=/usr/local/bin/dotnet /srv/www/web-api/FutShowMe.OrangePI.WebAPI.dll
+Restart=always
+RestartSec=10
+SyslogIdentifier=web-api
+User=igoncalves
+Environment=ASPNETCORE_ENVIRONMENT=Production
+
+[Install]
+WantedBy=multi-user.target
+
+3. Precisamos criar um diretório que o ASP.NET Core utilizará para algumas tarefas domésticas
+sudo mkdir /var/www/.dotnet
+sudo chown www-data:www-data /var/www/.dotnet
+
+4. Agora devemos poder executar o serviço.
+sudo systemctl start web-api
+
+5. Testar o serviço
+curl http://localhost:5005
+
+6. Outro comando é necessário para iniciar o serviço na inicialização.
+sudo systemctl enable web-api
+------------------------------------------------------------------------------------------------
+
+
+[Configurar Apache]
+------------------------------------------------------------------------------------------------
+1.Comece ativando os módulos proxy do Apache 2 para HTTP.
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+
+2. Em seguida, crie o seguinte arquivo:
+
+/etc/apache2/sites-available/web-api.conf
+<VirtualHost *:80>
+    ServerName dotnet.web-api.me
+
+    ProxyPreserveHost On
+    ProxyPass / http://localhost:5005/
+    ProxyPassReverse / http://localhost:5005/
+ErrorLog ${APACHE_LOG_DIR}web-api-error.log
+    CustomLog ${APACHE_LOG_DIR}web-api-access.log common
+</VirtualHost>
+
+3. Desabilitar a configuração padrao
+sudo a2dissite 000-default.conf
+
+4. Por fim, ative a nova configuração do site.
+sudo a2ensite web-api
+
+5. Agora, se tudo funcionar, poderemos navegar para o site.
+curl http://dotnet.web-api.me
+
+6. Reiniciar.
+sudo service apache2 restart
+
+[Atualizacao do Repo]
+-----------------------------------------------------------------------------------------------
+#!/bin/bash
+home="/home/igoncalves"
+cd ${home}/web-api/FutShowMe-WebAPI/FutShowMe.OrangePI.WebAPI/
+
+echo "Atualizando repositorio GIT"
+git pull
+
+status=$?
+
+if [ $status != 0 ]; then
+
+        echo "Erro ao executar o comando git pull..."
+        exit 3
+fi
+
+echo "Publicando..."
+
+dotnet publish -c Release
+cd bin/Release/netcoreapp3.0/publish/
+rm -rf Data/
+rm -rf appsettings.json
+
+echo "Copiando arquivos.."
+
+sudo systemctl stop web-api
+sudo cp * -R /srv/www/web-api/
+sudo systemctl start web-api
+
+echo "Liberando pino GPIO #68"
+echo 68 > /sys/class/gpio/unexport
+echo 68 > /sys/class/gpio/export
+echo in > /sys/class/gpio/gpio68/direction
+sudo chown igoncalves /sys/class/gpio/gpio68 * -R
+sudo chown igoncalves /sys/class/gpio/gpio68/direction * -R
+sudo chown igoncalves /sys/class/gpio/gpio68/value * -R
+
+echo "Liberando pino GPIO #71"
+echo 71 > /sys/class/gpio/unexport
+echo 71 > /sys/class/gpio/export
+echo in > /sys/class/gpio71/direction
+sudo chown igoncalves /sys/class/gpio/gpio71 * -R
+sudo chown igoncalves /sys/class/gpio/gpio71/direction * -R
+sudo chown igoncalves /sys/class/gpio/gpio71/value * -R

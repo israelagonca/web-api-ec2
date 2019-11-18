@@ -1,0 +1,1 @@
+﻿Scaffold-DbContext "server=localhost;port=3306;user=root;password=fkp12q@;database=futshowmedb" MySql.Data.EntityFrameworkCore -OutputDir Context -Tables tblacoescamera, tblcamera, tblcompartilhamento, tbllocal, tblquadra, tblvideo -f

@@ -1,0 +1,73 @@
+CREATE TABLE `tblacoescamera` (
+  `IdAcoesCamera` int(11) NOT NULL AUTO_INCREMENT,
+  `IdCamera` int(11) NOT NULL,
+  `DataCriacao` datetime NOT NULL,
+  `MsgErro` varchar(200) DEFAULT NULL,
+  `Status` varchar(45) NOT NULL,
+  PRIMARY KEY (`IdAcoesCamera`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `tblcamera` (
+  `IdCamera` int(11) NOT NULL AUTO_INCREMENT,
+  `IdQuadra` int(11) NOT NULL,
+  `Modelo` varchar(200) NOT NULL,
+  `Posicao` varchar(45) NOT NULL,
+  `Excluido` tinyint(4) DEFAULT NULL,
+  `DataCriacao` datetime NOT NULL,
+  `LocalEnderecoIP` varchar(100) DEFAULT NULL,
+  `ComandoFFMPEG` varchar(100) DEFAULT NULL,
+  `DiretorioVideos` varchar(200) DEFAULT NULL,
+  `DiretorioLogLocal` varchar(200) DEFAULT NULL,
+  `Status` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`IdCamera`),
+  KEY `camera_quadra_idx` (`IdQuadra`),
+  CONSTRAINT `camera_quadra` FOREIGN KEY (`IdQuadra`) REFERENCES `tblquadra` (`IdQuadra`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `tblcompartilhamento` (
+  `IdCompartilhamento` int(11) NOT NULL AUTO_INCREMENT,
+  `IdUsuario` int(11) NOT NULL,
+  `IdVideo` int(11) NOT NULL,
+  `DataCriacao` datetime NOT NULL,
+  `TipoCompartilhamento` varchar(45) NOT NULL,
+  PRIMARY KEY (`IdCompartilhamento`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `tbllocal` (
+  `IdLocal` int(11) NOT NULL AUTO_INCREMENT,
+  `Nome` varchar(45) NOT NULL,
+  `Rua` varchar(200) NOT NULL,
+  `Bairro` varchar(100) NOT NULL,
+  `Cidade` varchar(100) NOT NULL,
+  `Estado` varchar(2) NOT NULL,
+  `CEP` varchar(9) NOT NULL,
+  PRIMARY KEY (`IdLocal`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `tblquadra` (
+  `IdQuadra` int(11) NOT NULL AUTO_INCREMENT,
+  `IdLocal` int(11) DEFAULT NULL,
+  `Nome` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`IdQuadra`),
+  KEY `local_quadra_fk_idx` (`IdLocal`),
+  CONSTRAINT `local_quadra_fk` FOREIGN KEY (`IdLocal`) REFERENCES `tbllocal` (`IdLocal`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `tblvideo` (
+  `IdVideo` int(11) NOT NULL AUTO_INCREMENT,
+  `IdCamera` int(11) NOT NULL,
+  `IdVideoPrincipal` int(11) DEFAULT NULL,
+  `Excluido` tinyint(4) DEFAULT NULL,
+  `DataExclusao` datetime DEFAULT NULL,
+  `DataCriacao` datetime NOT NULL,
+  `NomeArquivo` varchar(100) NOT NULL,
+  `Diretorio` varchar(200) NOT NULL,
+  `Processado` tinyint(4) DEFAULT NULL,
+  `Enviado` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`IdVideo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
