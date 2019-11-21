@@ -240,13 +240,13 @@ namespace FutShowMe.WebAPI.Controllers
                 var file = new FileStream(_configuracoesGerais.DiretorioVideos + nomeVideo, FileMode.Open);
 
                 if (nomeVideo.Contains(".mp4"))
-                    return new FileStreamResult(file, new MediaTypeHeaderValue(_configuracoesGerais.ContentType).MediaType);
+                    return new FileStreamResult(file, "video/mp4");
                 else
                     return new FileStreamResult(file, "video/x-msvideo");
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.Message);
             }
 
         }
