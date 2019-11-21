@@ -139,8 +139,8 @@ namespace FutShowMe.WebAPI.Controllers
         }
 
         [Route("ListarVideos")]
-        [HttpGet]
-        public JsonResult ListarVideos()
+        [HttpPost]
+        public JsonResult ListarVideos([FromBody] VideoViewModel video)
         {
             ResponseBase<IEnumerable<VideoViewModel>> response = new ResponseBase<IEnumerable<VideoViewModel>>();
 
@@ -157,6 +157,7 @@ namespace FutShowMe.WebAPI.Controllers
                         var nomeArquivo = Path.GetFileName(arquivoVideos[i]);
                         videos.Add(new VideoViewModel()
                         {
+                            Thumb = nomeArquivo.Split(".")[0] + ".jpg",
                             NomeArquivo = nomeArquivo,
                             Url = _configuracoesGerais.UrlBase + nomeArquivo,
                             DataCriacao = getDataCriacaoVideo(nomeArquivo)
@@ -170,7 +171,9 @@ namespace FutShowMe.WebAPI.Controllers
 
                 }
 
-                response.Data = videos;
+                video = getFiltro(video);
+
+                response.Data = videos.Where(v => v.DataCriacao >= video.DataInicioFiltro && v.DataCriacao <= video.DataTerminoFiltro).ToList();
                 response.Success = true;
             }
             catch (Exception ex)
@@ -181,6 +184,21 @@ namespace FutShowMe.WebAPI.Controllers
 
             return base.buildJsonResult(response);
 
+        }
+
+        private VideoViewModel getFiltro(VideoViewModel video)
+        {
+            video.DataFiltro = video.DataFiltro.AddHours(7);
+
+            for (int i = 0; i < video.IdFiltroData; i++)
+            {
+                video.DataInicioFiltro = video.DataFiltro.AddHours(1);
+                video.DataFiltro = video.DataInicioFiltro;
+            }
+
+            video.DataTerminoFiltro = video.DataInicioFiltro.AddHours(1);
+
+            return video;
         }
 
         private DateTime getDataCriacaoVideo(string dataVideo)
@@ -213,10 +231,11 @@ namespace FutShowMe.WebAPI.Controllers
                 //_httpcontext.HttpContext.Response.Body.WriteAsync(bytes);
 
                 var file = new FileStream(_configuracoesGerais.DiretorioVideos + nomeVideo, FileMode.Open);
-                return new FileStreamResult(file, new MediaTypeHeaderValue(_configuracoesGerais.ContentType).MediaType);
 
-                return BadRequest();
-
+                if (nomeVideo.Contains(".mp4"))
+                    return new FileStreamResult(file, new MediaTypeHeaderValue(_configuracoesGerais.ContentType).MediaType);
+                else
+                    return new FileStreamResult(file, "video/x-msvideo");
             }
             catch (Exception ex)
             {

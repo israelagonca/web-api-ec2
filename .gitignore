@@ -15,3 +15,6 @@
 /FutShowMe.Infra.Data/bin/Debug
 /FutShowMe.OrangePI.WebAPI/bin
 /FutShowMe.OrangePI.WebAPI/obj
+/FutShowMe.Application/bin/Release/netcoreapp3.0
+/FutShowMe.Infra.Data/bin/Release/netcoreapp3.0
+/FutShowMe.WebAPI/bin/Release/netcoreapp3.0
