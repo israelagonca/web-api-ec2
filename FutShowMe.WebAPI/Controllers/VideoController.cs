@@ -33,6 +33,13 @@ namespace FutShowMe.WebAPI.Controllers
             _httpcontext = httpContextAccessor; ;
         }
 
+        [Route("Status")]
+        [HttpGet]
+        public ActionResult Status()
+        {
+            return Ok("Serviço ativo...");
+        }
+
         [Route("Adicionar")]
         [HttpPost]
         public JsonResult Adicionar([FromBody] VideoViewModel Video)
@@ -159,7 +166,7 @@ namespace FutShowMe.WebAPI.Controllers
                         {
                             Thumb = nomeArquivo.Split(".")[0] + ".jpg",
                             NomeArquivo = nomeArquivo,
-                            Url = _configuracoesGerais.UrlBase + nomeArquivo,
+                            Url = _configuracoesGerais.UrlBase + "api/video/Visualizar/" + nomeArquivo,
                             DataCriacao = getDataCriacaoVideo(nomeArquivo)
                         });
                     }
